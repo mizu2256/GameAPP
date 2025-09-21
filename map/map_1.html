@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/pages/map.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="dev-con">
+            <h2>積み木マス</h2>
+            <p>※このマスでは、プレイヤーにタブレットは渡しません。</p>
+            <p>ゲームルール：10秒以内にどれだけ積み木を積み上げることができるか</p>
+            <div class="dev-result" id="5">
+                <h3>結果</h3>
+                <div class="row">
+                    <button type="button" id="1">1 ~ 2</button>
+                    <button type="button" id="2">3 ~ 4</button>
+                    <button type="button" id="3">5 ~ 6</button>
+                </div>
+                <div class="row">
+                    <button type="button" id="4">7 ~ 9</button>
+                    <button type="button" id="5">10 ~ </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="check-con" style="display: none;">
+            <h3>必ず確認してください</h3>
+            <div class="check-text">
+                <p id="message">積み木の結果、</p>
+                <p id="check-text"></p>
+            </div>
+            <div class="check-result">
+                <button type="button" id="map-OK">はい</button>
+                <button type="button" id="map-NG">いいえ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

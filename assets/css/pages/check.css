@@ -1,0 +1,68 @@
+.player-con {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.player-con h2 {
+  font-size: var(--lbFont);
+  margin-bottom: 20px;
+}
+
+.player-con button {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px solid black;
+}
+
+/* dev-con check-con */
+
+.dev-con,
+.check-con {
+  padding: 40px 0;
+}
+
+.dev-con h3,
+.check-con h3 {
+  font-size: var(--lbFont);
+}
+
+.note {
+  padding-bottom: 10px;
+}
+
+#now-study {
+  padding-bottom: 10px;
+}
+
+.dice,
+.check-result {
+  padding: 20px 0;
+}
+
+.row {
+  padding: 10px;
+}
+
+.row,
+.check-result {
+  display: flex;
+  gap: 30px;
+  margin: 5px 0;
+}
+
+.dice-result button,
+.check-result button {
+  min-width: 120px;
+  height: 50px;
+  padding: 10px 40px;
+  border-radius: 5px;
+  border: 1px solid black;
+  font-size: var(--sbFont);
+}
+
+.check-con p.info {
+  padding: 5px 0;
+}

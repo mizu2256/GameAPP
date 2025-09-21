@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/pages/check.css">
+
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="player-con">
+            <h2>案内人にタブレットを渡してください。</h2>
+            <button type="button" id="ok-btn">OK</button>
+        </div>
+
+        <div class="dev-con" style="display: none;">
+            <h3>管理用</h3>
+            <p class="note">プレイヤーにサイコロを振るよう言ってください。</p>
+            <p id="now-money"></p>
+            <p id="now-power"></p>
+            <p id="now-study"></p>
+            <p id="now-map"></p>
+            <div class="dice">
+                <h4>サイコロ結果</h4>
+                <div class="dice-result">
+                    <div class="row">
+                        <button type="button">1</button>
+                        <button type="button">2</button>
+                        <button type="button">3</button>
+                    </div>
+                    <div class="row">
+                        <button type="button">4</button>
+                        <button type="button">5</button>
+                        <button type="button">6</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="check-con" style="display: none;">
+            <h3>必ず確認してください</h3>
+            <p id="check-map"></p>
+            <div class="check-result">
+                <button type="button" id="check-OK">はい</button>
+                <button type="button" id="check-NG">いいえ</button>
+            </div>
+            <p class="info">間違いがなければ、ページが移動したことを確認して、ゲームを進めてください。</p>
+        </div>
+    </div>
+
+    <!-- script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="assets/js/script.js"></script>
+</body>
+
+</html>

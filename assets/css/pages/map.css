@@ -1,0 +1,36 @@
+.dev-con {
+  padding: 40px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dev-result,
+.check-result {
+  padding: 20px 0;
+}
+
+.row {
+  padding: 10px;
+}
+
+.row,
+.check-result {
+  display: flex;
+  gap: 30px;
+  margin: 5px 0;
+}
+
+.dev-result button,
+.check-result button {
+  min-width: 120px;
+  height: 50px;
+  padding: 10px 40px;
+  border-radius: 5px;
+  border: 1px solid black;
+  font-size: var(--sbFont);
+}
+
+.check-text {
+  display: flex;
+}

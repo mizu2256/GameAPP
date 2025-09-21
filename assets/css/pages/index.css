@@ -1,0 +1,30 @@
+.title-con {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+}
+
+.title-con h1 {
+  font-size: var(--xltFont);
+}
+
+.title-con button {
+  margin: 0 auto;
+  width: 200px;
+  height: 60px;
+  border-radius: 10px;
+  position: relative;
+  transition: transform 0.5s ease;
+  font-size: var(--mbFont);
+}
+
+.title-con button:hover {
+  transform: scale(1.1);
+}
+

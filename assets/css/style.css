@@ -1,0 +1,58 @@
+@import url("https://fonts.googleapis.com/css2?family=Zen+Antique+Soft&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap");
+
+/* 全体設定・ファイル全体改変禁止 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 環境変数 */
+:root {
+  /* 文字の大きさ・文章 */
+  --sbFont: 16px;
+  --mbFont: 19px;
+  --lbFont: 22px;
+
+  /* 文字の大きさ・タイトル */
+  --xstFont: 24px;
+  --stFont: 30px;
+  --mtFont: 36px;
+  --ltFont: 42px;
+  --xltFont: 48px;
+
+  /* 色の指定 */
+  --colorI: rgb(240, 240, 240);
+  --colorII: rgb(36, 36, 188);
+  --colorIII: rgb(144, 144, 188);
+
+  /* フォント */
+  --fontI: "Zen Antique Soft", serif;
+  --fontII: "Alex Brush", serif;
+  --fontIII: sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #fff;
+}
+
+a,
+li {
+  text-decoration: none;
+  list-style: none;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 1350px;
+  margin: 0 auto;
+  padding: 0 5% 0;
+}
+
+button {
+  cursor: pointer;
+}
