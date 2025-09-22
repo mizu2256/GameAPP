@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja"> <!-- リアルに体験するマス用：テンプレート -->
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>マス1 積み木</title>
 
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/pages/map.css">
@@ -13,29 +13,36 @@
 <body>
     <div class="wrapper">
         <div class="dev-con">
-            <h2>積み木マス</h2>
+            <h2>積み木（リアルマス）</h2>
             <p>※このマスでは、プレイヤーにタブレットは渡しません。</p>
             <p>ゲームルール：10秒以内にどれだけ積み木を積み上げることができるか</p>
-            <div class="dev-result" id="5">
+            <div class="dev-result">
                 <h3>結果</h3>
                 <div class="row">
-                    <button type="button" id="1">1 ~ 2</button>
-                    <button type="button" id="2">3 ~ 4</button>
-                    <button type="button" id="3">5 ~ 6</button>
+                    <button type="button" class="1" data-type="3" data-value="5">1 ~ 2</button>
+                    <button type="button" class="2" data-type="3" data-value="10">3 ~ 4</button>
+                    <button type="button" class="3" data-type="3" data-value="15">5 ~ 6</button>
                 </div>
                 <div class="row">
-                    <button type="button" id="4">7 ~ 9</button>
-                    <button type="button" id="5">10 ~ </button>
+                    <button type="button" class="4" data-type="3" data-value="20">7 ~ 9</button>
+                    <button type="button" class="5" data-type="3" data-value="25">10 ~ </button>
                 </div>
             </div>
         </div>
 
         <div class="check-con" style="display: none;">
             <h3>必ず確認してください</h3>
-            <div class="check-text">
-                <p id="message">積み木の結果、</p>
+            <div class="check-text" id="check-text">
+                <p id="type">積み木の結果、</p>
                 <p id="check-text"></p>
             </div>
+            <div class="now">
+                <p id="now-money"></p>
+                <p id="now-power"></p>
+                <p id="now-study"></p>
+                <p id="now-map" style="display: none;"></p>
+            </div>
+
             <div class="check-result">
                 <button type="button" id="map-OK">はい</button>
                 <button type="button" id="map-NG">いいえ</button>

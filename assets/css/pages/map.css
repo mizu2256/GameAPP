@@ -1,11 +1,18 @@
-.dev-con {
+.dev-con,
+.check-con {
   padding: 40px 0;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
+}
+
+.dev-con h2 {
+  font-size: var(--lbFont);
+  margin-bottom: 10px;
 }
 
 .dev-result,
+.dev-ok,
 .check-result {
   padding: 20px 0;
 }
@@ -22,6 +29,7 @@
 }
 
 .dev-result button,
+.dev-ok button,
 .check-result button {
   min-width: 120px;
   height: 50px;
@@ -31,6 +39,76 @@
   font-size: var(--sbFont);
 }
 
+.check-con h3 {
+  font-size: var(--lbFont);
+}
+
 .check-text {
   display: flex;
+}
+
+/* player, result */
+.player-con,
+.result-con {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.player-con figure img {
+  max-width: 320px;
+  max-height: 320px;
+  border-radius: 15px;
+}
+
+.player-choose {
+  display: flex;
+  justify-content: space-around;
+}
+
+.result-con h3 {
+  font-size: var(--lbFont);
+}
+
+.player-con button,
+.result-con button {
+  min-width: 120px;
+  height: 50px;
+  padding: 10px 40px;
+  border-radius: 5px;
+  margin-top: 10px;
+  border: 1px solid black;
+  font-size: var(--sbFont);
+  transition: scale .5s ease;
+}
+
+.player-con button:hover,
+.result-con button:hover {
+  scale: 1.1;
+}
+
+/* video-player */
+/* 画面全体に広がるコンテナ */
+.video-player-con {
+  position: fixed; /* 画面に固定 */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex; /* 動画を中央に配置するために使用 */
+  justify-content: center;
+  align-items: center;
+  background-color: #000; /* 余白を黒で埋める */
+}
+
+/* 常に画面のどちらかにフィットする動画 */
+.video-player-con video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }

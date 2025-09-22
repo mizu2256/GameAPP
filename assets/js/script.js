@@ -1,119 +1,216 @@
-let money = 0;
-let power = 0;
-let study = 0;
-let map = 0;
-let checkMap, checkResult;
-
-const currentURL = window.location.href;
-console.log(currentURL);
-runOnSpecificPage();
-
-// 特定のURLでのみ実行する関数（chack.html）
-function runOnSpecificPage() {
-  if (currentURL.includes("/check.html")) {
-    showMoney();
-  }
+// URLパラメータからゲームデータを取得する共通関数
+function getGameDataFromURL() {
+  const urlParams = new URLSearchParams(window.location.search);
+  return {
+    money: parseInt(urlParams.get("money")) || 0,
+    power: parseInt(urlParams.get("power")) || 0,
+    study: parseInt(urlParams.get("study")) || 0,
+    map: parseInt(urlParams.get("map")) || 0,
+    skip: urlParams.get("skip"),
+    stop10: urlParams.get("stop10"),
+  };
 }
 
-// index.html専用
+// データをURLに追加してページ遷移する共通関数
+function navigateTo(page, data) {
+  const params = new URLSearchParams({
+    money: data.money,
+    power: data.power,
+    study: data.study,
+    map: data.map,
+    skip: data.skip,
+    stop10: data.stop10,
+  }).toString();
+  window.location.href = `${page}?${params}`;
+}
+
+// 画面のステータス表示を更新
+function updateStatsDisplay(data) {
+  $("#now-money").text(`現在の所持金: ${data.money}`);
+  $("#now-power").text(`現在の体力: ${data.power}`);
+  $("#now-study").text(`現在の知力: ${data.study}`);
+  $("#now-map").text(`現在のマス: ${data.map}`);
+}
+
+// -------------------- index.html用 --------------------
+
 function startGame() {
-  const button = document.querySelector(".title-con button");
+  const audio = $("#click-sound")[0];
+  audio.play();
 
-  button.style.transition = "transform 0.2s ease-out";
-  button.style.transform = "scale(1.2)";
+  const button = $(".title-con button");
+  button.css({
+    transition: "transform 0.2s ease-out",
+    transform: "scale(1.2)",
+  });
 
-  // 0.2秒待つ（スケールアップアニメーションが終わるのを待つ）
   setTimeout(() => {
-    button.style.transition = "transform 0.5s ease-out";
-    button.style.transform = "scale(0)";
-
-    // 0.5秒待つ（スケールダウンアニメーションが終わるのを待つ）
+    button.css({
+      transition: "transform 0.5s ease-out",
+      transform: "scale(0)",
+    });
     setTimeout(() => {
-      money = 10000;
-      power = 40;
-      study = 40;
-      checkPageSkip();
+      // 初期値でcheck.htmlにスキップ遷移
+      const initialData = {
+        money: 10000,
+        power: 40,
+        study: 40,
+        map: 0,
+        skip: true,
+        stop10: false,
+      };
+      navigateTo("check.html", initialData);
     }, 500);
   }, 200);
 }
 
-// check.htmlへの遷移・Skip遷移はすべてこれで行う
-function checkPageNormal() {
-  window.location.href = `check.html?money=${money}&power=${power}&study=${study}&map=${map}`;
-}
+// -------------------- check.html用 --------------------
 
-function checkPageSkip() {
-  window.location.href = `check.html?money=${money}&power=${power}&study=${study}&map=${map}&skip=true`;
-}
+function setupCheckPage() {
+  const data = getGameDataFromURL();
+  updateStatsDisplay(data);
 
-// check.html dev用
-function showMoney() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const nowMoney = urlParams.get("money");
-  const nowPower = urlParams.get("power");
-  const nowStudy = urlParams.get("study");
-  const nowMap = urlParams.get("map");
-  const skipCheck = urlParams.get("skip");
-  money = parseInt(nowMoney);
-  power = parseInt(nowPower);
-  study = parseInt(nowStudy);
-  map = parseInt(nowMap);
-  console.log(nowMoney);
-  document.getElementById("now-money").innerHTML = `現在の所持金: ${nowMoney}`;
-  document.getElementById("now-power").innerHTML = `現在の体力: ${nowPower}`;
-  document.getElementById("now-study").innerHTML = `現在の知力: ${nowStudy}`;
-  document.getElementById("now-map").innerHTML = `現在のマス: ${nowMap}`;
-  if (skipCheck == "true") {
+  if (data.skip === "true") {
     $(".player-con").hide();
     $(".dev-con").show();
   }
+
+  // OKボタンの処理
+  $("#ok-btn").on("click", function () {
+    $(".player-con").hide();
+    $(".dev-con").show();
+  });
+
+  // サイコロボタンの処理
+  $(".dice-result .row button").on("click", function () {
+    let diceRoll = parseInt($(this).text());
+    let newMap = data.map + diceRoll;
+    const checkStop10 = data.stop10;
+    let information = ""
+
+    if (newMap >= 10 && checkStop10 == 'false') {
+      newMap = 10;
+      diceRoll = 10 - data.map;
+      information = "STOPマスです！"
+    }
+
+    $(".dev-con").hide();
+    $(".check-con").show();
+
+    $("#check-map").html(
+      `${diceRoll}マス進み、今回止まるマスは、「${newMap}」です。${information}よろしいですか？`
+    );
+
+    // はいボタンの処理
+    $("#check-OK")
+      .off("click")
+      .on("click", function () {
+        const nextData = { ...data, map: newMap };
+        if(nextData.map === 10) {
+          nextData.stop10 = true;
+        }
+        navigateTo(`map/map_${nextData.map}.html`, nextData);
+      });
+  });
+
+  // いいえボタンの処理
+  $("#check-NG").on("click", function () {
+    $(".check-con").hide();
+    $(".dev-con").show();
+  });
 }
 
-// check・OKボタンがクリックされた時の処理
-$("#ok-btn").on("click", function () {
-  $(".player-con").hide();
-  $(".dev-con").show();
-});
+// -------------------- map_*.html（リアルマス）用 --------------------
 
-// check・マスを選択したときの処理
-$(".dice-result .row button").on("click", function () {
-  const diceRoll = parseInt($(this).text());
+function setupMapPage() {
+  const data = getGameDataFromURL();
+  updateStatsDisplay(data);
 
-  checkMap = map + diceRoll;
+  // 結果を選択したときの処理
+  $(".dev-result .row button").on("click", function () {
+    const checkType = parseInt($(this).data("type"));
 
+    const result = parseInt($(this).data("value"));
+    const result2 = parseInt($(this).data("value2"));
+    let message3;
+    const message1 = $(this).text();
+    let message2;
+
+    let updatedValue, updatedValue2;
+    const nextData = { ...data };
+
+    if (checkType === 1) {
+      updatedValue = data.money + result;
+      nextData.money = updatedValue;
+      message2 = "お金";
+    } else if (checkType === 2) {
+      updatedValue = data.power + result;
+      nextData.power = updatedValue;
+      message2 = "体力";
+    } else if (checkType === 3) {
+      updatedValue = data.study + result;
+      nextData.study = updatedValue;
+      message2 = "知力";
+    } else if (checkType === 4) {
+      updatedValue = data.money + result;
+      updatedValue2 = data.study + result2;
+      nextData.money = updatedValue;
+      nextData.study = updatedValue2;
+      message2 = "お金";
+      message3 = "知力";
+    } else if (checkType === 5) {
+      updatedValue = data.power + result;
+      updatedValue2 = data.study + result2;
+      console.log(result2);
+      nextData.power = updatedValue;
+      nextData.study = updatedValue2;
+      message2 = "体力";
+      message3 = "知力";
+    }
+
+    nextData.skip = true;
+
+    $(".dev-con").hide();
+    $(".check-con").show();
+
+    // 結果表示
+    if (checkType <= 3) {
+      $(".check-text #check-text").html(
+        `${message1}なので、${message2}が${result}増加し、${updatedValue}になります。よろしいですか？`
+      );
+    } else {
+      $(".check-text #check-text").html(
+        `${message1}なので、${message2}が${result}増加し、${updatedValue}になり、<br>${message3}が${result2}増加し、${updatedValue2}になります。よろしいですか？`
+      );
+    }
+
+    // はいボタンの処理
+    $("#map-OK")
+      .off("click")
+      .on("click", function () {
+        navigateTo("../../check.html", nextData);
+      });
+  });
+
+  // いいえボタンの処理
+  $("#map-NG").on("click", function () {
+    $(".check-con").hide();
+    $(".dev-con").show();
+  });
+}
+
+// OKボタンの処理
+$("#next-btn").on("click", function () {
   $(".dev-con").hide();
-  $(".check-con").show();
-
-  document.getElementById(
-    "check-map"
-  ).innerHTML = `${diceRoll}マス進み、今回止まるマスは、「${checkMap}」です。よろしいですか？`;
+  $(".player-con").show();
 });
 
-// check・はいを押したときの処理
-$("#check-NG").on("click", function () {
-  $(".check-con").hide();
-  $(".dev-con").show();
-});
-
-// check・いいえを押したときの処理
-$("#check-OK").on("click", function () {
-  map = checkMap;
-  window.location.href = `map/map_${map}.html?money=${money}&power=${power}&study=${study}`;
-});
-
-// map・結果を選択したときの処理
-$(".dev-result .row button").on("click", function () {
-  const ratio = parseInt($(".dev-result").attr("id"));
-  console.log(ratio);
-  const result = parseInt($(this).attr("id"));
-  const message = $(this).text();
-
-  checkResult = ratio * result;
-
-  $(".dev-con").hide();
-  $(".check-con").show();
-
-  document.getElementById(
-    "check-text"
-  ).innerHTML = `${message}なので、「${checkResult}」です。よろしいですか？`;
+// ページ読み込み時の共通初期化
+$(document).ready(function () {
+  const currentURL = window.location.href;
+  if (currentURL.includes("/check.html")) {
+    setupCheckPage();
+  } else if (currentURL.includes("/map/map_")) {
+    setupMapPage();
+  }
 });
