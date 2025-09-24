@@ -12,6 +12,7 @@
 }
 
 .dev-result,
+.dev-result-testmoney,
 .dev-ok,
 .check-result {
   padding: 20px 0;
@@ -19,6 +20,11 @@
 
 .row {
   padding: 10px;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-around;
 }
 
 .row,
@@ -29,6 +35,7 @@
 }
 
 .dev-result button,
+.dev-result-testmoney button,
 .dev-ok button,
 .check-result button {
   min-width: 120px;

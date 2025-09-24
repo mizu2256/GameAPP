@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja"> <!-- 動画選択マス用：テンプレート -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マス11 動画</title>
+
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/pages/map.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="dev-con">
+            <h2>選択マス</h2>
+            <p>※このマスでは、プレイヤーにタブレットを渡し、選択してもらいます。</p>
+            <div class="dev-ok">
+                <button type="button" id="next-btn">OK</button>
+            </div>
+        </div>
+
+        <div class="player-con" style="display: none;" id="video-con">
+            <figure id="picture">
+                <img>
+            </figure>
+            <h2>えらんでね！</h2>
+            <p>明日は小テストだ。だけど夜も遅くて眠たい...</p>
+            <p>寝る？勉強する？</p>
+            <div class="player-choose" style="display: block;">
+                <div class="row flex">
+                    <div class="button-text">
+                        <button type="button" class="choose" data-money="0" data-power="10"
+                            data-study="-5">寝る</button>
+                    </div>
+                    <div class="button-text">
+                        <button type="button" class="choose" data-money="0" data-power="-5"
+                            data-study="10">勉強する</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="result-con" style="display: none;">
+            <h3>結果</h3>
+            <p id="result-text"></p>
+            <div class="now">
+                <p id="now-money"></p>
+                <p id="now-power"></p>
+                <p id="now-study"></p>
+                <p id="now-map" style="display: none;"></p>
+            </div>
+            <button type="button" id="finish-video">OK</button>
+        </div>
+    </div>
+
+    <!-- script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/choose.js"></script>
+</body>
+
+</html>

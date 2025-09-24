@@ -1,25 +1,39 @@
-// URLパラメータからゲームデータを取得する共通関数
-function getGameDataFromURL() {
+// URLパラメータまたはローカルストレージからゲームデータを取得する共通関数
+function getGameData() {
   const urlParams = new URLSearchParams(window.location.search);
-  return {
+  const data = {
     money: parseInt(urlParams.get("money")) || 0,
     power: parseInt(urlParams.get("power")) || 0,
     study: parseInt(urlParams.get("study")) || 0,
     map: parseInt(urlParams.get("map")) || 0,
     skip: urlParams.get("skip"),
-    stop10: urlParams.get("stop10"),
   };
+  // URLパラメータにデータがない場合、ローカルストレージから取得
+  if (Object.values(data).every((val) => !val)) {
+    const savedData = localStorage.getItem("gameData");
+    return savedData
+      ? JSON.parse(savedData)
+      : {
+          money: 10000,
+          power: 40,
+          study: 40,
+          map: 0,
+          skip: true,
+        };
+  }
+  return data;
 }
 
-// データをURLに追加してページ遷移する共通関数
+// データをURLに追加し、ローカルストレージに保存してページ遷移する共通関数
 function navigateTo(page, data) {
+  // ローカルストレージにデータを保存
+  localStorage.setItem("gameData", JSON.stringify(data));
   const params = new URLSearchParams({
     money: data.money,
     power: data.power,
     study: data.study,
     map: data.map,
     skip: data.skip,
-    stop10: data.stop10,
   }).toString();
   window.location.href = `${page}?${params}`;
 }
@@ -57,7 +71,6 @@ function startGame() {
         study: 40,
         map: 0,
         skip: true,
-        stop10: false,
       };
       navigateTo("check.html", initialData);
     }, 500);
@@ -67,10 +80,10 @@ function startGame() {
 // -------------------- check.html用 --------------------
 
 function setupCheckPage() {
-  const data = getGameDataFromURL();
+  const data = getGameData(); // データの取得元をローカルストレージに対応
   updateStatsDisplay(data);
 
-  if (data.skip === "true") {
+  if (data.skip === "true" || data.skip === true) {
     $(".player-con").hide();
     $(".dev-con").show();
   }
@@ -84,14 +97,21 @@ function setupCheckPage() {
   // サイコロボタンの処理
   $(".dice-result .row button").on("click", function () {
     let diceRoll = parseInt($(this).text());
-    let newMap = data.map + diceRoll;
-    const checkStop10 = data.stop10;
-    let information = ""
+    const nextMap = data.map + diceRoll;
+    let newMap = nextMap;
+    let information = "";
 
-    if (newMap >= 10 && checkStop10 == 'false') {
-      newMap = 10;
-      diceRoll = 10 - data.map;
-      information = "STOPマスです！"
+    // ストップマスを配列で管理
+    const stopPoints = [10, 19];
+
+    // ストップマスを通過または停止する場合の処理
+    for (const stopPoint of stopPoints) {
+      if (data.map < stopPoint && nextMap >= stopPoint) {
+        newMap = stopPoint;
+        diceRoll = stopPoint - data.map;
+        information = "STOPマスです！";
+        break; // 複数のストップマスを通過する場合、最初のストップマスで止まる
+      }
     }
 
     $(".dev-con").hide();
@@ -106,8 +126,11 @@ function setupCheckPage() {
       .off("click")
       .on("click", function () {
         const nextData = { ...data, map: newMap };
-        if(nextData.map === 10) {
-          nextData.stop10 = true;
+
+        // 止まったマスがストップマスだった場合の処理（必要に応じて追加）
+        if (stopPoints.includes(nextData.map)) {
+          // 例: 止まったストップマスのフラグを立てる
+          // nextData[`stop${nextData.map}`] = true;
         }
         navigateTo(`map/map_${nextData.map}.html`, nextData);
       });
@@ -123,13 +146,12 @@ function setupCheckPage() {
 // -------------------- map_*.html（リアルマス）用 --------------------
 
 function setupMapPage() {
-  const data = getGameDataFromURL();
+  const data = getGameData(); // データの取得元をローカルストレージに対応
   updateStatsDisplay(data);
 
   // 結果を選択したときの処理
   $(".dev-result .row button").on("click", function () {
     const checkType = parseInt($(this).data("type"));
-
     const result = parseInt($(this).data("value"));
     const result2 = parseInt($(this).data("value2"));
     let message3;
@@ -161,7 +183,6 @@ function setupMapPage() {
     } else if (checkType === 5) {
       updatedValue = data.power + result;
       updatedValue2 = data.study + result2;
-      console.log(result2);
       nextData.power = updatedValue;
       nextData.study = updatedValue2;
       message2 = "体力";
@@ -183,6 +204,39 @@ function setupMapPage() {
         `${message1}なので、${message2}が${result}増加し、${updatedValue}になり、<br>${message3}が${result2}増加し、${updatedValue2}になります。よろしいですか？`
       );
     }
+
+    // はいボタンの処理
+    $("#map-OK")
+      .off("click")
+      .on("click", function () {
+        navigateTo("../../check.html", nextData);
+      });
+  });
+
+  $(".dev-result-testmoney .row button").on("click", function () {
+    const result = parseInt($(this).data("value"));
+    let message3;
+    const message1 = $(this).text();
+    let message2;
+
+    let updatedValue;
+    const nextData = { ...data };
+
+    let resultMoney = (parseInt(data.study) + result * 10) * 10 + 500
+
+    updatedValue = data.money + resultMoney;
+    nextData.money = updatedValue;
+    message2 = "お金";
+
+    nextData.skip = true;
+
+    $(".dev-con").hide();
+    $(".check-con").show();
+
+    // 結果表示
+      $(".check-text #check-text").html(
+        `${message1}なので、${message2}が${resultMoney}増加し、${updatedValue}になります。よろしいですか？`
+      );
 
     // はいボタンの処理
     $("#map-OK")
