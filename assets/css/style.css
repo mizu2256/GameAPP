@@ -11,7 +11,7 @@
 /* 環境変数 */
 :root {
   /* 文字の大きさ・文章 */
-  --sbFont: 16px;
+  --sbFont: 17px;
   --mbFont: 19px;
   --lbFont: 22px;
 
@@ -39,6 +39,8 @@ body {
   min-height: 100vh;
   background-color: #fff;
   user-select: none;
+  background-image: url(../pictures/common/background.webp);
+  background-size: cover;
 }
 
 a,
@@ -57,4 +59,8 @@ li {
 button {
   cursor: pointer;
   user-select: none;
+}
+
+p {
+  font-size: var(--sbFont);
 }
