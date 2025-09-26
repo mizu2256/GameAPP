@@ -102,7 +102,7 @@ function updateWorkDisplay(data) {
 
   // 2. 職業名（name）が存在する場合に表示を更新
   if (currentWork) {
-    $(".now-work").text(`現在の職業: ${currentWork.name}`);
+    $(".now-work").text(`現在の職業: ${currentWork.name}（給料: ${currentWork.money}）`);
   } else {
     // IDが見つからない場合の処理（例: エラーメッセージやデフォルト表示）
     $(".now-work").text("現在の職業: 不明");
@@ -168,7 +168,7 @@ function setupCheckPage() {
     let information = "";
 
     // ストップマスを配列で管理
-    const stopPoints = [10, 19, 40];
+    const stopPoints = [10, 19, 40, 47, 54];
 
     // ストップマスを通過または停止する場合の処理
     for (const stopPoint of stopPoints) {

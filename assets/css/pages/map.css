@@ -13,6 +13,7 @@
 
 .dev-result,
 .dev-result-testmoney,
+.dev-result-salary
 .dev-ok,
 .check-result {
   padding: 20px 0;
@@ -36,6 +37,7 @@
 
 .dev-result button,
 .dev-result-testmoney button,
+.dev-result-salary button,
 .dev-ok button,
 .check-result button {
   min-width: 120px;

@@ -38,6 +38,10 @@ $(function () {
     const changeValue3 = $(this).data("value3");
     const buttonId = $(this).attr("id");
 
+    if (buttonId == "skip") {
+      $(".video-player-con").css("background-color", "#fff")
+    }
+
     // 動画のパスを設定
     const videoPath = `../assets/video/${buttonId}.mp4`;
     const videoPlayer = $("#video-player");

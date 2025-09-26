@@ -5,7 +5,6 @@ $(document).on("contextmenu", function (e) {
 $(function () {
   let nextGameData;
 
-  // 動画再生ボタンのクリックイベント
   $(".choose").on("click", function () {
     // ボタンのデータ属性からタイプと変動値を取得
     const changeValueMoney = parseInt($(this).data("money"));

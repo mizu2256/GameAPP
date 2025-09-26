@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ja"> <!-- 動画選択マス用：テンプレート -->
+<html lang="ja"> <!-- リアルに体験するマス用：テンプレート -->
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>マス29 動画</title>
+    <title>マス36 ゴミ箱入れ</title>
 
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/pages/map.css">
@@ -13,45 +13,40 @@
 <body>
     <div class="wrapper">
         <div class="dev-con">
-            <h2>動画マス</h2>
-            <p>※このマスでは、プレイヤーにタブレットを渡し、再生してもらいます。</p>
-            <div class="dev-ok">
-                <button type="button" id="next-btn">OK</button>
+            <h2>怪我（通常マス）</h2>
+            <p>※このマスでは、プレイヤーにタブレットは渡しません。</p>
+            <p>言う内容：体育の授業で、転んで怪我をしてしまいました... 体力が10減少します</p>
+            <div class="dev-result">
+                <h3>結果</h3>
+                <div class="row">
+                    <button type="button" class="1" data-type="2" data-value="-10">OK</button>
+                </div>
             </div>
         </div>
 
-        <div class="player-con" style="display: none;" id="video-con">
-            <figure id="picture">
-                <img>
-            </figure>
-            <h2>読んで進めてね！</h2>
-            <p>小学校の友達とばったり...</p>
-            <div class="player-choose">
-                <button type="button" id="map17" class="video-start" data-type="5" data-value="-10" data-value2="-10">動画スタート</button>
+        <div class="check-con" style="display: none;">
+            <h3>必ず確認してください</h3>
+            <div class="check-text" id="check-text">
+                <p id="type">サイコロの結果、</p>
+                <p id="check-text"></p>
             </div>
-        </div>
-
-        <div class="video-player-con" style="display: none;">
-            <video id="video-player" autoplay playsinline preload="auto"></video>
-        </div>
-
-        <div class="result-con" style="display: none;">
-            <h3>結果</h3>
-            <p id="result-text"></p>
             <div class="now">
                 <p class="now-money"></p>
                 <p class="now-power"></p>
                 <p class="now-study"></p>
                 <p class="now-map" style="display: none;"></p>
             </div>
-            <button type="button" id="finish-video">OK</button>
+
+            <div class="check-result">
+                <button type="button" id="map-OK">はい</button>
+                <button type="button" id="map-NG">いいえ</button>
+            </div>
         </div>
     </div>
 
     <!-- script -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="../assets/js/script.js"></script>
-    <script src="../assets/js/video.js"></script>
 </body>
 
 </html>

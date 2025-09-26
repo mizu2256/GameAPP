@@ -5,8 +5,7 @@ $(document).on("contextmenu", function (e) {
 $(function () {
   let nextGameData;
 
-  // 動画再生ボタンのクリックイベント
-  $(".choose").on("click", function () {
+  $(".player-choose .choose").on("click", function () {
     // ボタンのデータ属性からタイプと変動値を取得
     const gameData = getGameData();
     nowPower = gameData.power;
@@ -36,14 +35,19 @@ $(function () {
     nextGameData = gameData;
     nextGameData.skip = false;
 
-    if (checkValueWork != 5) {
+    if (checkValueWork != 5 && checkValueWork != 9) {
       resultText = `あなたの知力・体力（${nowStudy}・${nowPower}） は規定値（${checkValueStudy}・${checkValuePower}）を超えています。<br>就職しますか？<br>（現在のステータスは変動していません）`;
-    } else {
+    } else if (checkValueWork != 9) {
       resultText = `就職しますか？<br>（現在のステータスは変動していません）`;
+    } else {
+      resultText = `変更しませんか？<br>（現在のステータスは変動していません）<br>`;
     }
 
     $("#result-text").html(resultText);
-    nextGameData.work = checkValueWork;
+
+    if (checkValueWork != 9) {
+      nextGameData.work = checkValueWork;
+    }
 
     updateStatsDisplay(nextGameData);
 
@@ -60,5 +64,5 @@ $(function () {
   $("#recheck").on("click", function () {
     $(".result-con").hide();
     $(".player-con").show();
-  })
+  });
 });
