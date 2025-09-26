@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>リアル人生ゲーム</title>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/pages/finish.css">
+
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="dev-con">
+            <h2>ゴールしました</h2>
+            <p>最後にリザルト表示があるので、OKを押した後、タブレットを渡してください。</p>
+            <div class="dev-ok">
+                <button type="button" class="next-1">OK</button>
+            </div>
+
+        </div>
+        <div class="player-con p-con" style="display: none;">
+            <h1>ゴール！！！</h1>
+            <p>それでは、リザルトを見ていきましょう</p>
+            <button type="button" class="next-2">OK</button>
+        </div>
+        <div class="player-result-con p-con" style="display: none;">
+            <h2>最終結果</h2>
+            <p class="now-money"></p>
+            <p class="now-power"></p>
+            <p class="now-study"></p>
+            <p class="now-work"></p>
+        </div>
+
+    </div>
+
+
+
+    <!-- script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/finish.js"></script>
+</body>
+
+</html>

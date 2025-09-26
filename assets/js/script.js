@@ -43,7 +43,7 @@ const workName = [
     name: "平社員",
     money: 10000,
   },
-]
+];
 
 // URLパラメータまたはローカルストレージからゲームデータを取得する共通関数
 function getGameData() {
@@ -96,16 +96,40 @@ function updateStatsDisplay(data) {
   $(".now-map").text(`現在のマス: ${data.map}`);
 }
 
+function updateStatsDisplayLast(data) {
+  $(".now-money").text(`所持金: ${data.money}（初期値から${data.money - 20000}増加）`);
+  $(".now-power").text(`体力: ${data.power}（初期値から${data.power - 50}増加）`);
+  $(".now-study").text(`知力: ${data.study}（初期値から${data.study - 50}増加）`);
+}
+
 function updateWorkDisplay(data) {
   // 1. data.work のIDに一致するオブジェクトを workName 配列から検索
-  const currentWork = workName.find(work => work.id === data.work);
+  const currentWork = workName.find((work) => work.id === data.work);
 
   // 2. 職業名（name）が存在する場合に表示を更新
   if (currentWork) {
-    $(".now-work").text(`現在の職業: ${currentWork.name}（給料: ${currentWork.money}）`);
+    $(".now-work").text(
+      `現在の職業: ${currentWork.name}（給料: ${currentWork.money}）`
+    );
   } else {
     // IDが見つからない場合の処理（例: エラーメッセージやデフォルト表示）
     $(".now-work").text("現在の職業: 不明");
+    console.error(`職業ID ${data.work} に一致するデータが見つかりません。`);
+  }
+}
+
+function updateWorkDisplayLast(data) {
+  // 1. data.work のIDに一致するオブジェクトを workName 配列から検索
+  const currentWork = workName.find((work) => work.id === data.work);
+
+  // 2. 職業名（name）が存在する場合に表示を更新
+  if (currentWork) {
+    $(".now-work").text(
+      `職業: ${currentWork.name}（給料: ${currentWork.money}）`
+    );
+  } else {
+    // IDが見つからない場合の処理（例: エラーメッセージやデフォルト表示）
+    $(".now-work").text("職業: 不明");
     console.error(`職業ID ${data.work} に一致するデータが見つかりません。`);
   }
 }
@@ -154,6 +178,10 @@ function setupCheckPage() {
     $(".dev-con").show();
   }
 
+  if (data.map === 65) {
+    navigateTo(`finish.html`, data);
+  }
+
   // OKボタンの処理
   $("#ok-btn").on("click", function () {
     $(".player-con").hide();
@@ -168,7 +196,7 @@ function setupCheckPage() {
     let information = "";
 
     // ストップマスを配列で管理
-    const stopPoints = [10, 19, 40, 47, 54];
+    const stopPoints = [10, 19, 40, 47, 54, 65];
 
     // ストップマスを通過または停止する場合の処理
     for (const stopPoint of stopPoints) {

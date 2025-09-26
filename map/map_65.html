@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja"> <!-- リアルに体験するマス用：テンプレート -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マス47 給料日</title>
+
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/pages/map.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="dev-con">
+            <h2>ゴール・退職金</h2>
+            <p>※このマスでは、プレイヤーにタブレットは渡しません。</p>
+            <p>ストーリー：退職金として、基本給の1.5倍のお金がもらえる。</p>
+            <div class="dev-result-salary">
+                <h3>結果</h3>
+                <div class="row">
+                    <button type="button" class="choose" data-value="1.5">OK</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="check-con" style="display: none;">
+            <h3>必ず確認してください</h3>
+            <div class="check-text" id="check-text">
+                <p id="type">結果、</p>
+                <p id="check-text"></p>
+            </div>
+            <div class="now">
+                <p class="now-money"></p>
+                <p class="now-power"></p>
+                <p class="now-study"></p>
+                <p class="now-map" style="display: none;"></p>
+                <p class="now-work"></p>
+            </div>
+
+            <div class="check-result">
+                <button type="button" id="map-OK">はい</button>
+                <button type="button" id="map-NG">いいえ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/salary.js"></script>
+</body>
+
+</html>

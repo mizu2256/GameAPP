@@ -1,0 +1,75 @@
+.dev-con,
+.check-con {
+  padding: 40px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.dev-con h2 {
+  font-size: var(--lbFont);
+  margin-bottom: 10px;
+}
+
+.dev-ok {
+  padding: 20px 0;
+}
+
+.dev-ok button {
+  min-width: 120px;
+  height: 50px;
+  padding: 10px 40px;
+  border-radius: 5px;
+  border: 1px solid black;
+  font-size: var(--sbFont);
+}
+
+.check-con h3 {
+  font-size: var(--lbFont);
+}
+
+.check-text {
+  display: flex;
+}
+
+/* player, result */
+.p-con {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.p-con figure img {
+  max-width: 320px;
+  max-height: 320px;
+  border-radius: 15px;
+}
+
+.player-choose {
+  display: flex;
+  justify-content: space-around;
+}
+
+.result-con h3 {
+  font-size: var(--lbFont);
+}
+
+.p-con button {
+  min-width: 120px;
+  height: 50px;
+  padding: 10px 40px;
+  border-radius: 5px;
+  margin-top: 10px;
+  border: 1px solid black;
+  font-size: var(--sbFont);
+  transition: scale .5s ease;
+}
+
+.p-con button:hover {
+  scale: 1.1;
+}
