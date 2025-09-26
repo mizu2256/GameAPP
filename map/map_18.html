@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>マス11 動画</title>
+    <title>マス18 反抗</title>
 
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/pages/map.css">
@@ -13,8 +13,8 @@
 <body>
     <div class="wrapper">
         <div class="dev-con">
-            <h2>動画マス</h2>
-            <p>※このマスでは、プレイヤーにタブレットを渡し、再生してもらいます。</p>
+            <h2>選択マス</h2>
+            <p>※このマスでは、プレイヤーにタブレットを渡し、選択してもらいます。</p>
             <div class="dev-ok">
                 <button type="button" id="next-btn">OK</button>
             </div>
@@ -24,25 +24,32 @@
             <figure id="picture">
                 <img>
             </figure>
-            <h2>読んで進めてね！</h2>
-            <p>先生と喧嘩して...</p>
-            <div class="player-choose">
-                <button type="button" id="map8" class="video-start" data-type="5" data-value="-10" data-value2="10">動画スタート</button>
-            </div>
-        </div>
+            <h2>えらんでね！</h2>
+            <p>先生にいろいろ文句つけられた。</p>
+            <p>黙る？反抗する？</p>
+            <div class="player-choose" style="display: block;">
+                <div class="row flex">
+                    <div class="button-text">
+                        <button type="button" class="choose" data-money="0" data-power="-10"
+                            data-study="10">黙る</button>
+                    </div>
+                    <div class="button-text">
+                        <button type="button" class="choose" data-money="0" data-power="10"
+                            data-study="-10">反抗する</button>
+                    </div>
+                </div>
 
-        <div class="video-player-con" style="display: none;">
-            <video id="video-player" autoplay playsinline preload="auto"></video>
+            </div>
         </div>
 
         <div class="result-con" style="display: none;">
             <h3>結果</h3>
             <p id="result-text"></p>
             <div class="now">
-                <p id="now-money"></p>
-                <p id="now-power"></p>
-                <p id="now-study"></p>
-                <p id="now-map" style="display: none;"></p>
+                <p class="now-money"></p>
+                <p class="now-power"></p>
+                <p class="now-study"></p>
+                <p class="now-map" style="display: none;"></p>
             </div>
             <button type="button" id="finish-video">OK</button>
         </div>
@@ -51,7 +58,7 @@
     <!-- script -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="../assets/js/script.js"></script>
-    <script src="../assets/js/video.js"></script>
+    <script src="../assets/js/choose.js"></script>
 </body>
 
 </html>

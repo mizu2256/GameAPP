@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja"> <!-- リアルに体験するマス用：テンプレート -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マス33 告白</title>
+
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/pages/map.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="dev-con">
+            <h2>告白（サイコロマス）</h2>
+            <p>※このマスでは、プレイヤーにタブレットは渡しません。</p>
+            <p>話す文章：とある大友達に告白をした。サイコロを振り、1~3が出たら告白成功
+                ！体力と知力が増加します。
+            </p>
+            <div class="dev-result">
+                <h3>結果</h3>
+                <div class="row">
+                    <button type="button" class="1" data-type="5" data-value="20" data-value2="20">1</button>
+                    <button type="button" class="2" data-type="5" data-value="20" data-value2="20">2</button>
+                    <button type="button" class="3" data-type="5" data-value="20" data-value2="20">3</button>
+                </div>
+                <div class="row">
+                    <button type="button" class="4" data-type="5" data-value="-10" data-value2="-10">4</button>
+                    <button type="button" class="5" data-type="5" data-value="-10" data-value2="-10">5</button>
+                    <button type="button" class="5" data-type="5" data-value="-10" data-value2="-10">6</button>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="check-con" style="display: none;">
+            <h3>必ず確認してください</h3>
+            <div class="check-text" id="check-text">
+                <p id="type">サイコロの結果、</p>
+                <p id="check-text"></p>
+            </div>
+            <div class="now">
+                <p class="now-money"></p>
+                <p class="now-power"></p>
+                <p class="now-study"></p>
+                <p class="now-map" style="display: none;"></p>
+            </div>
+
+            <div class="check-result">
+                <button type="button" id="map-OK">はい</button>
+                <button type="button" id="map-NG">いいえ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

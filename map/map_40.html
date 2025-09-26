@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja"> <!-- 動画選択マス用：テンプレート -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マス40 就職</title>
+
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/pages/map.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="dev-con">
+            <h2>選択マス</h2>
+            <p>※このマスでは、プレイヤーにタブレットを渡し、選択してもらいます。</p>
+            <div class="dev-ok">
+                <button type="button" id="next-btn">OK</button>
+            </div>
+        </div>
+
+        <div class="player-con" style="display: none;" id="video-con">
+            <figure id="picture">
+                <img>
+            </figure>
+            <h2>えらんでね！</h2>
+            <p>職業選択マスです。よく考えて就職しましょう！</p>
+            <div class="now">
+                <p class="now-money" style="display: none;"></p>
+                <p class="now-power"></p>
+                <p class="now-study"></p>
+                <p class="now-map" style="display: none;"></p>
+                <p class="now-work" style="display: none;"></p>
+            </div>
+            <div class="player-choose" style="display: block;">
+                <div class="row flex">
+                    <div class="button-text">
+                        <button type="button" class="choose" data-work="1" data-power="50" data-study="350">医者</button>
+                        <p>必要知力：350（体力は50以上必要です）</p>
+                    </div>
+                    <div class="button-text">
+                        <button type="button" class="choose" data-work="2" data-power="0" data-study="200">銀行員</button>
+                        <p>必要知力：200（体力は0以上必要です）</p>
+                    </div>
+
+                </div>
+                <div class="row flex">
+                    <div class="button-text">
+                        <button type="button" class="choose" data-work="3" data-power="200"
+                            data-study="50">とび職人</button>
+                        <p>必要体力：200（知力は50以上必要です）</p>
+                    </div>
+                    <div class="button-text">
+                        <button type="button" class="choose" data-work="4" data-power="100" data-study="0">警察官</button>
+                        <p>必要体力：100（知力は0以上必要です）</p>
+                    </div>
+                </div>
+                <div class="row flex">
+                    <div class="button-text">
+                        <button type="button" class="choose" data-work="5" data-power="-999"
+                            data-study="-999">平社員</button>
+                        <p>必要体力・知力：なし</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="result-con" style="display: none;">
+            <h3>確認</h3>
+            <p id="result-text"></p>
+            <div class="now">
+                <p class="now-money"></p>
+                <p class="now-power"></p>
+                <p class="now-study"></p>
+                <p class="now-map" style="display: none;"></p>
+                <p class="now-work" style="display: none;"></p>
+            </div>
+            <div class="row flex">
+                <button type="button" id="finish-video">はい</button>
+                <button type="button" id="recheck">いいえ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/work.js"></script>
+</body>
+
+</html>

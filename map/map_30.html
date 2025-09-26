@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja"> <!-- 動画選択マス用：テンプレート -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マス30 バイト</title>
+
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/pages/map.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="dev-con">
+            <h2>選択マス</h2>
+            <p>※このマスでは、プレイヤーにタブレットを渡し、選択してもらいます。</p>
+            <div class="dev-ok">
+                <button type="button" id="next-btn">OK</button>
+            </div>
+        </div>
+
+        <div class="player-con" style="display: none;" id="video-con">
+            <figure id="picture">
+                <img>
+            </figure>
+            <h2>えらんでね！</h2>
+            <p>バイトでお金を稼ぐか、選んでね</p>
+            <p>※熱心することは、ハイリスク・ハイリターンです</p>
+            <div class="player-choose" style="display: block;">
+                <div class="row flex">
+                    <div class="button-text">
+                        <button type="button" class="choose" data-money="0" data-power="0"
+                            data-study="0">バイトをしない</button>
+                        <p>お金・体力・知力 全て変動なし</p>
+                    </div>
+
+                </div>
+                <div class="row flex">
+                    <div class="button-text">
+                        <button type="button" class="choose" data-money="4000" data-power="-10"
+                            data-study="-10">バイトをする</button>
+                        <p>体力・知力10消費 獲得金額4,000</p>
+                    </div>
+                    <div class="button-text">
+                        <button type="button" class="choose" data-money="7000" data-power="-30"
+                            data-study="-30">熱心にバイトをする</button>
+                        <p>体力・知力30消費 獲得金額7,000</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="result-con" style="display: none;">
+            <h3>結果</h3>
+            <p id="result-text"></p>
+            <div class="now">
+                <p class="now-money"></p>
+                <p class="now-power"></p>
+                <p class="now-study"></p>
+                <p class="now-map" style="display: none;"></p>
+            </div>
+            <button type="button" id="finish-video">OK</button>
+        </div>
+    </div>
+
+    <!-- script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/choose.js"></script>
+</body>
+
+</html>

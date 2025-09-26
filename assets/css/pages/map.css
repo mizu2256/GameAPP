@@ -101,7 +101,8 @@
 
 /* video-player */
 /* 画面全体に広がるコンテナ */
-.video-player-con {
+.video-player-con,
+.pre-video-con {
   position: fixed; /* 画面に固定 */
   top: 0;
   left: 0;
@@ -114,7 +115,8 @@
 }
 
 /* 常に画面のどちらかにフィットする動画 */
-.video-player-con video {
+.video-player-con video,
+.pre-video-con video {
   width: 100%;
   height: 100%;
   object-fit: contain;

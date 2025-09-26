@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja"> <!-- 動画選択マス用：テンプレート -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マス32 動画</title>
+
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/pages/map.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="dev-con">
+            <h2>動画マス</h2>
+            <p>※このマスでは、プレイヤーにタブレットを渡し、再生してもらいます。</p>
+            <p style="text-decoration: underline;">※このマスのみ、OKを押した瞬間に動画が再生されます！</p>
+            <p>OKを押した瞬間から見せるようにしてください。</p>
+            <div class="dev-ok">
+                <button type="button" class="pre-start">OK</button>
+            </div>
+        </div>
+
+        <div class="pre-video-con" style="display: none;">
+            <video src="../assets/video/map32_1.mp4" id="pre-video-player" playsinline preload="auto"></video>
+        </div>
+
+        <div class="player-con" style="display: none;" id="video-con">
+            <figure id="picture">
+                <img>
+            </figure>
+            <h2>えらんでね！</h2>
+            <p>だれが1位になるか選んでね</p>
+            <div class="player-choose">
+                <div class="row">
+                    <button type="button" id="map32_2" class="video-start" data-type="5" data-value="5"
+                        data-value2="5">1</button>
+                    <button type="button" id="map32_2" class="video-start" data-type="5" data-value="10"
+                        data-value2="10">2</button>
+                    <button type="button" id="map32_2" class="video-start" data-type="5" data-value="30"
+                        data-value2="30">3</button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="video-player-con" style="display: none;">
+            <video id="video-player" autoplay playsinline preload="auto"></video>
+        </div>
+
+        <div class="result-con" style="display: none;">
+            <h3>結果</h3>
+            <p id="result-text"></p>
+            <div class="now">
+                <p class="now-money"></p>
+                <p class="now-power"></p>
+                <p class="now-study"></p>
+                <p class="now-map" style="display: none;"></p>
+            </div>
+            <button type="button" id="finish-video">OK</button>
+        </div>
+    </div>
+
+    <!-- script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/video.js"></script>
+</body>
+
+</html>

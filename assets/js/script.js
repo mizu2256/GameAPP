@@ -1,3 +1,50 @@
+// // JavaScriptまたはjQuery
+// $(window).on("beforeunload", function () {
+//   // ユーザーに警告メッセージを表示させる
+//   // 戻り値に文字列を設定すると、ブラウザがそのメッセージを含むダイアログを表示します。
+//   // （最近のブラウザでは、セキュリティ上の理由からカスタムメッセージの表示は制御されますが、
+//   //   ダイアログ自体は表示されます。）
+//   return "ページを離れようとしています。データが保存されていませんが、よろしいですか？";
+// });
+
+// function saveData() {
+//   $(window).off("beforeunload");
+// }
+
+// 職業のID・名前・給料を記した配列変数
+const workName = [
+  {
+    id: 0,
+    name: "未就職",
+    money: 0,
+  },
+  {
+    id: 1,
+    name: "医師",
+    money: 30000,
+  },
+  {
+    id: 2,
+    name: "銀行員",
+    money: 20000,
+  },
+  {
+    id: 3,
+    name: "とび職人",
+    money: 25000,
+  },
+  {
+    id: 4,
+    name: "警察官",
+    money: 15000,
+  },
+  {
+    id: 5,
+    name: "平社員",
+    money: 10000,
+  },
+]
+
 // URLパラメータまたはローカルストレージからゲームデータを取得する共通関数
 function getGameData() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -6,6 +53,7 @@ function getGameData() {
     power: parseInt(urlParams.get("power")) || 0,
     study: parseInt(urlParams.get("study")) || 0,
     map: parseInt(urlParams.get("map")) || 0,
+    work: parseInt(urlParams.get("work")) || 0,
     skip: urlParams.get("skip"),
   };
   // URLパラメータにデータがない場合、ローカルストレージから取得
@@ -14,10 +62,11 @@ function getGameData() {
     return savedData
       ? JSON.parse(savedData)
       : {
-          money: 10000,
-          power: 40,
-          study: 40,
+          money: 20000,
+          power: 50,
+          study: 50,
           map: 0,
+          work: 0,
           skip: true,
         };
   }
@@ -33,6 +82,7 @@ function navigateTo(page, data) {
     power: data.power,
     study: data.study,
     map: data.map,
+    work: data.work,
     skip: data.skip,
   }).toString();
   window.location.href = `${page}?${params}`;
@@ -40,10 +90,24 @@ function navigateTo(page, data) {
 
 // 画面のステータス表示を更新
 function updateStatsDisplay(data) {
-  $("#now-money").text(`現在の所持金: ${data.money}`);
-  $("#now-power").text(`現在の体力: ${data.power}`);
-  $("#now-study").text(`現在の知力: ${data.study}`);
-  $("#now-map").text(`現在のマス: ${data.map}`);
+  $(".now-money").text(`現在の所持金: ${data.money}`);
+  $(".now-power").text(`現在の体力: ${data.power}`);
+  $(".now-study").text(`現在の知力: ${data.study}`);
+  $(".now-map").text(`現在のマス: ${data.map}`);
+}
+
+function updateWorkDisplay(data) {
+  // 1. data.work のIDに一致するオブジェクトを workName 配列から検索
+  const currentWork = workName.find(work => work.id === data.work);
+
+  // 2. 職業名（name）が存在する場合に表示を更新
+  if (currentWork) {
+    $(".now-work").text(`現在の職業: ${currentWork.name}`);
+  } else {
+    // IDが見つからない場合の処理（例: エラーメッセージやデフォルト表示）
+    $(".now-work").text("現在の職業: 不明");
+    console.error(`職業ID ${data.work} に一致するデータが見つかりません。`);
+  }
 }
 
 // -------------------- index.html用 --------------------
@@ -66,10 +130,11 @@ function startGame() {
     setTimeout(() => {
       // 初期値でcheck.htmlにスキップ遷移
       const initialData = {
-        money: 10000,
-        power: 40,
-        study: 40,
+        money: 20000,
+        power: 50,
+        study: 50,
         map: 0,
+        work: 0,
         skip: true,
       };
       navigateTo("check.html", initialData);
@@ -82,6 +147,7 @@ function startGame() {
 function setupCheckPage() {
   const data = getGameData(); // データの取得元をローカルストレージに対応
   updateStatsDisplay(data);
+  updateWorkDisplay(data);
 
   if (data.skip === "true" || data.skip === true) {
     $(".player-con").hide();
@@ -102,7 +168,7 @@ function setupCheckPage() {
     let information = "";
 
     // ストップマスを配列で管理
-    const stopPoints = [10, 19];
+    const stopPoints = [10, 19, 40];
 
     // ストップマスを通過または停止する場合の処理
     for (const stopPoint of stopPoints) {
@@ -148,17 +214,18 @@ function setupCheckPage() {
 function setupMapPage() {
   const data = getGameData(); // データの取得元をローカルストレージに対応
   updateStatsDisplay(data);
+  updateWorkDisplay(data);
 
   // 結果を選択したときの処理
   $(".dev-result .row button").on("click", function () {
     const checkType = parseInt($(this).data("type"));
     const result = parseInt($(this).data("value"));
     const result2 = parseInt($(this).data("value2"));
-    let message3;
+    const result3 = parseInt($(this).data("value3"));
     const message1 = $(this).text();
-    let message2;
+    let message2, message3, message4;
 
-    let updatedValue, updatedValue2;
+    let updatedValue, updatedValue2, updatedValue3;
     const nextData = { ...data };
 
     if (checkType === 1) {
@@ -187,6 +254,23 @@ function setupMapPage() {
       nextData.study = updatedValue2;
       message2 = "体力";
       message3 = "知力";
+    } else if (checkType === 6) {
+      updatedValue = data.money + result;
+      updatedValue2 = data.power + result2;
+      nextData.money = updatedValue;
+      nextData.power = updatedValue2;
+      message2 = "お金";
+      message3 = "体力";
+    } else if (checkType === 7) {
+      updatedValue = data.money + result;
+      updatedValue2 = data.power + result2;
+      updatedValue3 = data.study + result3;
+      nextData.money = updatedValue;
+      nextData.power = updatedValue2;
+      nextData.study = updatedValue3;
+      message2 = "お金";
+      message3 = "体力";
+      message4 = "知力";
     }
 
     nextData.skip = true;
@@ -199,9 +283,13 @@ function setupMapPage() {
       $(".check-text #check-text").html(
         `${message1}なので、${message2}が${result}増加し、${updatedValue}になります。よろしいですか？`
       );
-    } else {
+    } else if (checkType <= 6) {
       $(".check-text #check-text").html(
         `${message1}なので、${message2}が${result}増加し、${updatedValue}になり、<br>${message3}が${result2}増加し、${updatedValue2}になります。よろしいですか？`
+      );
+    } else {
+      $(".check-text #check-text").html(
+        `${message1}なので、${message2}が${result}増加し、${updatedValue}になり、<br>${message3}が${result2}増加し、${updatedValue2}になり、<br>${message4}が${result3}増加し、${updatedValue3}になります。よろしいですか？`
       );
     }
 
@@ -222,7 +310,11 @@ function setupMapPage() {
     let updatedValue;
     const nextData = { ...data };
 
-    let resultMoney = (parseInt(data.study) + result * 10) * 10 + 500
+    let resultMoney =
+      Math.round(
+        parseInt((parseInt(data.study) + 100) * (1 + result * 0.1) * 5 + 3000) /
+          100
+      ) * 100;
 
     updatedValue = data.money + resultMoney;
     nextData.money = updatedValue;
@@ -234,9 +326,9 @@ function setupMapPage() {
     $(".check-con").show();
 
     // 結果表示
-      $(".check-text #check-text").html(
-        `${message1}なので、${message2}が${resultMoney}増加し、${updatedValue}になります。よろしいですか？`
-      );
+    $(".check-text #check-text").html(
+      `${message1}なので、${message2}が${resultMoney}増加し、${updatedValue}になります。よろしいですか？`
+    );
 
     // はいボタンの処理
     $("#map-OK")
