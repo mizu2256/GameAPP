@@ -20,7 +20,7 @@ $(function () {
     let alertMessage, resultText;
 
     // 知力増加値が一定値を超えていない場合、エラーとしてアラートを表示し、処理を中断
-    if (nowStudy <= checkValueStudy || nowPower <= checkValuePower) {
+    if (nowStudy < checkValueStudy || nowPower < checkValuePower) {
       alertMessage =
         "知力・体力の増加値が規定値（知力：" +
         checkValueStudy +
