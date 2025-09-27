@@ -3,11 +3,20 @@ $(function () {
   updateStatsDisplayLast(gameData);
   updateWorkDisplayLast(gameData);
 
+  const valueInsideSqrt =
+    (gameData.money + (gameData.power + gameData.study) * 10) * 100;
   let totalResult;
 
-  totalResult = parseInt(
-    Math.sqrt(Math.abs(gameData.money + (gameData.power + gameData.study) * 10))
-  );
+  if (valueInsideSqrt < 0) {
+    // ルート内の値が負の場合
+    // Math.sqrtの引数に絶対値を与えてルート計算を行い、結果を負の数にします。
+    // Math.sqrt(0)は0なので、valueInsideSqrt = 0 の場合は else ブロックで処理されます。
+    totalResult = -parseInt(Math.sqrt(Math.abs(valueInsideSqrt)));
+  } else {
+    // ルート内の値が0以上の場合
+    totalResult = parseInt(Math.sqrt(valueInsideSqrt));
+  }
+
   $(".total-result").text(`最終リザルト：${totalResult}点`);
 
   $(".next-1")
@@ -35,6 +44,6 @@ $(function () {
     .off("click")
     .on("click", function () {
       $(window).off("beforeunload");
-      navigateTo("../../index.html", gameData);
+      navigateTo("../../index.html", null);
     });
 });

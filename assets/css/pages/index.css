@@ -7,11 +7,23 @@
   padding: 50px;
   display: flex;
   flex-direction: column;
-  gap: 100px;
+  gap: 80px;
 }
 
 .title-con h1 {
   font-size: var(--xltFont);
+}
+
+.title-con div p {
+  padding-bottom: 15px;
+  font-size: var(--mbFont);
+}
+
+.title-con div input {
+  padding: 5px;
+  width: 300px;
+  text-align: center;
+  font-size: var(--sbFont);
 }
 
 .title-con button {
