@@ -1,15 +1,15 @@
-// // JavaScriptまたはjQuery
-// $(window).on("beforeunload", function () {
-//   // ユーザーに警告メッセージを表示させる
-//   // 戻り値に文字列を設定すると、ブラウザがそのメッセージを含むダイアログを表示します。
-//   // （最近のブラウザでは、セキュリティ上の理由からカスタムメッセージの表示は制御されますが、
-//   //   ダイアログ自体は表示されます。）
-//   return "ページを離れようとしています。データが保存されていませんが、よろしいですか？";
-// });
+// JavaScriptまたはjQuery
+$(window).on("beforeunload", function () {
+  // ユーザーに警告メッセージを表示させる
+  // 戻り値に文字列を設定すると、ブラウザがそのメッセージを含むダイアログを表示します。
+  // （最近のブラウザでは、セキュリティ上の理由からカスタムメッセージの表示は制御されますが、
+  //   ダイアログ自体は表示されます。）
+  return "ページを離れようとしています。データが保存されていませんが、よろしいですか？";
+});
 
-// function saveData() {
-//   $(window).off("beforeunload");
-// }
+function saveData() {
+  $(window).off("beforeunload");
+}
 
 $(document).on("contextmenu", function (e) {
   e.preventDefault();
