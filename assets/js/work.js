@@ -26,7 +26,7 @@ $(function () {
         checkValueStudy +
         "・体力：" +
         checkValuePower +
-        "）以下です。この職業には就職できません...";
+        "）未満です。この職業には就職できません...";
       alert(`${alertMessage}`);
       return; // ここで処理を中断
     }
