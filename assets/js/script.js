@@ -59,6 +59,7 @@ function getGameData() {
     map: parseInt(urlParams.get("map")) || 0,
     work: parseInt(urlParams.get("work")) || 0,
     skip: urlParams.get("skip"),
+    name: urlParams.get("name"),
   };
   // URLパラメータにデータがない場合、ローカルストレージから取得
   if (Object.values(data).every((val) => !val)) {
@@ -88,6 +89,7 @@ function navigateTo(page, data) {
     map: data.map,
     work: data.work,
     skip: data.skip,
+    name: data.name, // ★ ここを追加
   }).toString();
   window.location.href = `${page}?${params}`;
 }
@@ -101,15 +103,26 @@ function updateStatsDisplay(data) {
 }
 
 function updateStatsDisplayLast(data) {
-  $(".now-money").text(
-    `所持金: ${data.money}（初期値から${data.money - 20000}増加）`
-  );
-  $(".now-power").text(
-    `体力: ${data.power}（初期値から${data.power - 50}増加）`
-  );
-  $(".now-study").text(
-    `知力: ${data.study}（初期値から${data.study - 50}増加）`
-  );
+  $(".player-name").text(`${data.name}の最終結果`);
+
+  const formatDiff = (diff) => {
+    // 差分が正（プラス）の場合に "+" を付加
+    if (diff > 0) {
+        return `+${diff}`;
+    }
+    // 差分が負（マイナス）または 0 の場合はそのまま返す
+    return String(diff);
+};
+
+$(".now-money").text(
+    `所持金: ${data.money}（初期値から${formatDiff(data.money - 20000)}）`
+);
+$(".now-power").text(
+    `体力: ${data.power}（初期値から${formatDiff(data.power - 50)}）`
+);
+$(".now-study").text(
+    `知力: ${data.study}（初期値から${formatDiff(data.study - 50)}）`
+);
 }
 
 function updateWorkDisplay(data) {
@@ -144,9 +157,129 @@ function updateWorkDisplayLast(data) {
   }
 }
 
+/**
+ * 入力文字列を正規化し、NGワードをチェックする
+ * @param {string} text - チェックする文字列
+ * @returns {string|null} - NGワードが見つかった場合はそのワード、見つからなかった場合はnullを返す
+ */
+function checkProfanity(text) {
+  // 1. 全角を半角に、カタカナをひらがなに、大文字を小文字に変換して正規化
+  let normalizedText = text.toLowerCase();
+  normalizedText = normalizedText.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function (s) {
+    return String.fromCharCode(s.charCodeAt(0) - 0xfee0);
+  });
+  normalizedText = normalizedText.replace(/[\u30a1-\u30f6]/g, function (s) {
+    return String.fromCharCode(s.charCodeAt(0) - 0x60); // カタカナをひらがなに
+  });
+  // スペース、記号などを除去（チェック精度を上げるため、必要に応じて）
+  normalizedText = normalizedText.replace(/[!！?？\s　]/g, "");
+
+  // 2. 検出する言葉のリスト（ひらがな、カタカナ、漢字、英語を含む50個以上の例）
+  // ★ チーム名や名前に使用される可能性があるため、誤検出を避ける単語（例: 'さけ', 'かた'）は避けるか、完全一致でのみ検出するように調整が必要です。
+  const profanityList = [
+    // 侮辱・卑下
+    "ばか",
+    "あほ",
+    "まぬけ",
+    "くず",
+    "のろま",
+    "へたくそ",
+    "ざこ",
+    "ぶす",
+    "ふざけんな",
+    "うざい",
+    "きもい",
+    "ださい",
+    "くそ",
+    "しね",
+    "ころす",
+    "idiot",
+    "stupid",
+    "dumb",
+    "loser",
+    "asshole",
+    "bitch",
+    "shit",
+    "fuck",
+
+    // 下品・性的なもの
+    "ちんこ",
+    "まんこ",
+    "おっぱい",
+    "せっくす",
+    "ほうこう",
+    "うんこ",
+    "きんたま",
+    "penis",
+    "vagina",
+    "boobs",
+    "sex",
+    "poop",
+    "tits",
+
+    // 下品なもの（自分で追加）
+    "114514",
+    "810",
+    "野獣先輩",
+
+    // 差別的表現 (非常に慎重にリストアップすべき部分)
+    "きちがい",
+
+    // その他
+    "ごみ",
+    "カス",
+    "ボケ",
+    "うんち",
+    "アホ",
+    "死ね",
+    "殺す",
+    "クソ",
+  ];
+
+  // 3. 部分一致でNGワードをチェック
+  for (const word of profanityList) {
+    // 正規化されたテキストにNGワードが含まれているか確認
+    if (normalizedText.includes(word)) {
+      return word; // 見つかったNGワードを返す
+    }
+  }
+
+  return null; // 問題なし
+}
+
 // -------------------- index.html用 --------------------
 
 function startGame() {
+  // 1. テキストボックスの値を取得
+  // HTML側で <input type="text" id="input-name"> のような要素が必要です
+  const playerName = $("#input-name").val() || "";
+
+  // 2. 空欄チェック
+  if (playerName.trim() === "") {
+    // trim()で空白のみの入力もチェック
+    alert("チーム名を入力してください！");
+    return;
+  }
+
+  // 3. 不適切な言葉のチェック
+  const foundProfanity = checkProfanity(playerName);
+  if (foundProfanity) {
+    alert(
+      `不適切な言葉（「${foundProfanity}」の関連語）が含まれています。別の名前を入力してください。`
+    );
+    return; // ゲーム開始をブロック
+  }
+
+  // ★ 4. 確認ダイアログの追加
+  const confirmation = confirm(`チーム名「${playerName}」でよろしいですか？`);
+
+  if (!confirmation) {
+    // ユーザーが「キャンセル」を押した場合、処理を中断
+    return;
+  }
+  // ------------------------------------
+
+  // 以下、ゲーム開始アニメーションと遷移
   const audio = $("#click-sound")[0];
   audio.play();
 
@@ -170,6 +303,7 @@ function startGame() {
         map: 0,
         work: 0,
         skip: true,
+        name: playerName,
       };
       $(window).off("beforeunload");
       navigateTo("check.html", initialData);
@@ -314,9 +448,12 @@ function setupMapPage() {
       message4 = "知力";
     }
 
-    const resultText = result >= 0 ? `${Math.abs(result)}増加` : `${Math.abs(result)}減少`;
-    const resultText2 = result2 >= 0 ? `${Math.abs(result2)}増加` : `${Math.abs(result2)}減少`;
-    const resultText3 = result3 >= 0 ? `${Math.abs(result3)}増加` : `${Math.abs(result3)}減少`;
+    const resultText =
+      result >= 0 ? `${Math.abs(result)}増加` : `${Math.abs(result)}減少`;
+    const resultText2 =
+      result2 >= 0 ? `${Math.abs(result2)}増加` : `${Math.abs(result2)}減少`;
+    const resultText3 =
+      result3 >= 0 ? `${Math.abs(result3)}増加` : `${Math.abs(result3)}減少`;
 
     nextData.skip = true;
 
