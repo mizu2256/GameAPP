@@ -11,6 +11,10 @@
 //   $(window).off("beforeunload");
 // }
 
+$(document).on("contextmenu", function (e) {
+  e.preventDefault();
+});
+
 // 職業のID・名前・給料を記した配列変数
 const workName = [
   {

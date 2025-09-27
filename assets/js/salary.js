@@ -1,7 +1,3 @@
-$(document).on("contextmenu", function (e) {
-  e.preventDefault();
-});
-
 $(function () {
   let nextGameData;
 

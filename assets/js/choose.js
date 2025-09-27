@@ -1,7 +1,3 @@
-$(document).on("contextmenu", function (e) {
-  e.preventDefault();
-});
-
 $(function () {
   let nextGameData;
 
@@ -51,7 +47,6 @@ $(function () {
   });
 
   $("#finish-video").on("click", function () {
-    $(document).off("contextmenu");
     navigateTo("../../check.html", nextGameData);
   });
 });
