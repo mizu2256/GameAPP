@@ -176,6 +176,7 @@ $(function () {
 
   $("#finish-video").on("click", function () {
     $(document).off("contextmenu");
+    $(window).off("beforeunload");
     navigateTo("../../check.html", nextGameData);
   });
 });

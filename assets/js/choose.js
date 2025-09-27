@@ -47,6 +47,7 @@ $(function () {
   });
 
   $("#finish-video").on("click", function () {
+    $(window).off("beforeunload");
     navigateTo("../../check.html", nextGameData);
   });
 });

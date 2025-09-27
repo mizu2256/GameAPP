@@ -34,6 +34,7 @@ $(function () {
   $(".reset")
     .off("click")
     .on("click", function () {
+      $(window).off("beforeunload");
       navigateTo("../../index.html", gameData);
     });
 });

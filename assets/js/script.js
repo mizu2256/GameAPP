@@ -101,9 +101,15 @@ function updateStatsDisplay(data) {
 }
 
 function updateStatsDisplayLast(data) {
-  $(".now-money").text(`所持金: ${data.money}（初期値から${data.money - 20000}増加）`);
-  $(".now-power").text(`体力: ${data.power}（初期値から${data.power - 50}増加）`);
-  $(".now-study").text(`知力: ${data.study}（初期値から${data.study - 50}増加）`);
+  $(".now-money").text(
+    `所持金: ${data.money}（初期値から${data.money - 20000}増加）`
+  );
+  $(".now-power").text(
+    `体力: ${data.power}（初期値から${data.power - 50}増加）`
+  );
+  $(".now-study").text(
+    `知力: ${data.study}（初期値から${data.study - 50}増加）`
+  );
 }
 
 function updateWorkDisplay(data) {
@@ -165,6 +171,7 @@ function startGame() {
         work: 0,
         skip: true,
       };
+      $(window).off("beforeunload");
       navigateTo("check.html", initialData);
     }, 500);
   }, 200);
@@ -183,6 +190,7 @@ function setupCheckPage() {
   }
 
   if (data.map === 65) {
+    $(window).off("beforeunload");
     navigateTo(`finish.html`, data);
   }
 
@@ -230,6 +238,7 @@ function setupCheckPage() {
           // 例: 止まったストップマスのフラグを立てる
           // nextData[`stop${nextData.map}`] = true;
         }
+        $(window).off("beforeunload");
         navigateTo(`map/map_${nextData.map}.html`, nextData);
       });
   });
@@ -329,6 +338,7 @@ function setupMapPage() {
     $("#map-OK")
       .off("click")
       .on("click", function () {
+        $(window).off("beforeunload");
         navigateTo("../../check.html", nextData);
       });
   });
@@ -366,6 +376,7 @@ function setupMapPage() {
     $("#map-OK")
       .off("click")
       .on("click", function () {
+        $(window).off("beforeunload");
         navigateTo("../../check.html", nextData);
       });
   });

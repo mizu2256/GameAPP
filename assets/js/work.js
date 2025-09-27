@@ -58,6 +58,7 @@ $(function () {
   $("#finish-video").on("click", function () {
     $(document).off("contextmenu");
     // nextGameDataは数値増減前の値が格納されているが、check.htmlへ遷移
+    $(window).off("beforeunload");
     navigateTo("../../check.html", nextGameData);
   });
 
