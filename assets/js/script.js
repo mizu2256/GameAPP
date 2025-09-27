@@ -314,6 +314,10 @@ function setupMapPage() {
       message4 = "知力";
     }
 
+    const resultText = result >= 0 ? `${Math.abs(result)}増加` : `${Math.abs(result)}減少`;
+    const resultText2 = result2 >= 0 ? `${Math.abs(result2)}増加` : `${Math.abs(result2)}減少`;
+    const resultText3 = result3 >= 0 ? `${Math.abs(result3)}増加` : `${Math.abs(result3)}減少`;
+
     nextData.skip = true;
 
     $(".dev-con").hide();
@@ -322,15 +326,15 @@ function setupMapPage() {
     // 結果表示
     if (checkType <= 3) {
       $(".check-text #check-text").html(
-        `${message1}なので、${message2}が${result}増加し、${updatedValue}になります。よろしいですか？`
+        `${message1}なので、${message2}が${resultText}し、${updatedValue}になります。よろしいですか？`
       );
     } else if (checkType <= 6) {
       $(".check-text #check-text").html(
-        `${message1}なので、${message2}が${result}増加し、${updatedValue}になり、<br>${message3}が${result2}増加し、${updatedValue2}になります。よろしいですか？`
+        `${message1}なので、${message2}が${resultText}し、${updatedValue}になり、<br>${message3}が${resultText2}し、${updatedValue2}になります。よろしいですか？`
       );
     } else {
       $(".check-text #check-text").html(
-        `${message1}なので、${message2}が${result}増加し、${updatedValue}になり、<br>${message3}が${result2}増加し、${updatedValue2}になり、<br>${message4}が${result3}増加し、${updatedValue3}になります。よろしいですか？`
+        `${message1}なので、${message2}が${resultText}し、${updatedValue}になり、<br>${message3}が${resultText2}し、${updatedValue2}になり、<br>${message4}が${resultText3}し、${updatedValue3}になります。よろしいですか？`
       );
     }
 
