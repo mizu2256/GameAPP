@@ -78,6 +78,22 @@ function getGameData() {
   return data;
 }
 
+function getGameDataFromData() {
+  // URLパラメータにデータがない場合、ローカルストレージから取得
+  const savedData = localStorage.getItem("gameData");
+  return savedData
+    ? JSON.parse(savedData)
+    : {
+        money: 20000,
+        power: 50,
+        study: 50,
+        map: 0,
+        work: 0,
+        skip: true,
+      };
+  return data;
+}
+
 // データをURLに追加し、ローカルストレージに保存してページ遷移する共通関数
 function navigateTo(page, data) {
   // ローカルストレージにデータを保存
@@ -108,21 +124,21 @@ function updateStatsDisplayLast(data) {
   const formatDiff = (diff) => {
     // 差分が正（プラス）の場合に "+" を付加
     if (diff > 0) {
-        return `+${diff}`;
+      return `+${diff}`;
     }
     // 差分が負（マイナス）または 0 の場合はそのまま返す
     return String(diff);
-};
+  };
 
-$(".now-money").text(
+  $(".now-money").text(
     `所持金: ${data.money}（初期値から${formatDiff(data.money - 20000)}）`
-);
-$(".now-power").text(
+  );
+  $(".now-power").text(
     `体力: ${data.power}（初期値から${formatDiff(data.power - 50)}）`
-);
-$(".now-study").text(
+  );
+  $(".now-study").text(
     `知力: ${data.study}（初期値から${formatDiff(data.study - 50)}）`
-);
+  );
 }
 
 function updateWorkDisplay(data) {
