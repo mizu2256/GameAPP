@@ -53,7 +53,12 @@ $(function () {
   $("#map-OK-a")
     .off("click")
     .on("click", function () {
+      // 💡 追加: ページ遷移はしないが、最新のデータをローカルストレージに保存する
+      localStorage.setItem("gameData", JSON.stringify(nextGameData));
+
+      // 💡 追加: 転職画面に表示されるステータスを最新にする
+      updateStatsDisplay(nextGameData);
       $(".check-con").hide();
-      $(".player-con").show()
+      $(".player-con").show();
     });
 });

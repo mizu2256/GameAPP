@@ -75,7 +75,8 @@
   border-radius: 15px;
 }
 
-.player-choose {
+.player-choose,
+.player-choose-2 {
   display: flex;
   justify-content: space-around;
 }
